@@ -5,6 +5,8 @@ entity prac is
 end prac;
 
 architecture inside of prac is 
+-- This region is called the declarative region of the vhdl file
+-- if we want to introduce the new signal then we introduce them here
 process is
     -- this is where we initialize the variables
     -- for their assignment we use := and for signals we use <=
@@ -17,7 +19,8 @@ begin
     -- Once the processing is finished, it keeps on running in a loop
     -- thats why use wait; statement to pause it
     -- in case of signal assignments, these are though carried out sequentially
-    -- but their results are only updated after the end of the loop
+    -- but their results are only updated after their is some delay (delta delay)
+    -- like in the case of wait statements
     -- so in order to really do sequential updatation we use variables
     
     --using this we go to an infinite loop and we have to break it internally
