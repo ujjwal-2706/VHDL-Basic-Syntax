@@ -7,6 +7,19 @@ end prac;
 architecture inside of prac is 
 -- This region is called the declarative region of the vhdl file
 -- if we want to introduce the new signal then we introduce them here
+signal temp1 : std_logic_vector(7 downto 0) := (others => '0');
+-- temp1 is a vector of bits, here using others will set all 8 bits value of 0
+-- downto is used to use the indexing from 7 to 0
+-- we also have another alternative
+signal temp2 : std_logic_vector(0 to 7) := (others => '1');
+-- this will create a signal with initial value of 11111111 where the indexing 
+-- starts form 0 to 7
+
+-- now if we want to represent a integer in terms of an unsigned or signed 
+-- binary then we use the data types of signed and unsigned
+signal sig: signed(7 downto 0) := (others => '0');
+signal unsig: unsigned(7 downto 0) := (others => '1');
+signal concurrent : unsigned(9 downto 0);
 process is
     -- this is where we initialize the variables
     -- for their assignment we use := and for signals we use <=
@@ -45,6 +58,33 @@ begin
         wait for 10 ns;
         i := i + 1;
     end loop;
+
+    -- This is how we define if-elsif-else statement
+    if i < 10 then 
+        report "i is less then 10";
+    elsif i = 10 then
+        report "i is 10";
+    else
+        report "let's forget about i";
+    end if;
     wait;
 end process;
+
+process(i) is
+    report "i is getting changed";
+    -- here we have created a process using a sensivity list
+    -- this will get triggered everytime i value is changed
+    -- so in these kind of processes we don't need wait statements
+    -- to pause our process
+    
+    -- inorder to access the bit of vector signals use temp1(i)
+    for i in 7 downto 0 loop
+        temp2(i) <= temp1(i);
+    end loop;
+end process;
+    concurrent <= unsig & "00";
+    -- this is a way to create a concurrent signal
+    -- in vhdl a concurrent signal is the one without
+    -- any process, and it is same as the the process
+    -- with sensitivity list same as that of the right operands
 end inside;
